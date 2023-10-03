@@ -1,42 +1,25 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class Directory {
-
-    private String dirname;
-    private List<File> files;
-    private List<Directory> subdirs;
+// Represents a directory
+class Directory extends BaseItem {
+    private List<BaseItem> children;
 
     public Directory(String name) {
-        dirname = name;
-        files = new ArrayList<>();
-        subdirs = new ArrayList<>();
+        super(name);
+        children = new ArrayList<>();
     }
 
-    public void add(File file) {
-        files.add(file);
+    public List<BaseItem> getChildren() {
+        return children;
     }
 
-    public void add(Directory dir) {
-        subdirs.add(dir);
+    public void addChild(BaseItem item) {
+        children.add(item);
     }
 
-    public boolean empty() {
-        return checkRecursively(this);
+    public boolean removeChild(BaseItem item) {
+        return children.remove(item);
     }
-
-    public boolean checkRecursively(Directory dir) {
-        if (dir.files.size() > 0) {
-            return false;
-        }
-        for (Directory subdir : dir.subdirs) {
-            if (!checkRecursively(subdir)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
 }
